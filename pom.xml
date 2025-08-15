@@ -11,8 +11,8 @@
 	<groupId>com.saiDeveloper</groupId>
 	<artifactId>JWT-Exception-Handling-Data-JPA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Spring_Boot_Starter_Template</name>
-	<description>A Starter template consisting of Jwt, Exception Handling+ Data JPA</description>
+	<name>MarkView</name>
+	<description>Application which performs grammar checks and provide markdown to html conversion</description>
 	<url/>
 	<licenses>
 		<license/>
