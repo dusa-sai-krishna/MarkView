@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -33,5 +34,10 @@ public class MarkController {
         log.info("Content:{}",content);
         return new ResponseEntity<>(this.service.saveMarkdown(fileName,content), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/list")
+    private ResponseEntity<List<Markdown>> fetchAllMarkdowns(){
+        List<Markdown> lst = this.service.fetchAllMarkdowns();
+        return new ResponseEntity<>(lst,HttpStatus.OK);}
 
 }
