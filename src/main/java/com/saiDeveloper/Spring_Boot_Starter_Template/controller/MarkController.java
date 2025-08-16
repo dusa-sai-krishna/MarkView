@@ -1,5 +1,6 @@
 package com.saiDeveloper.Spring_Boot_Starter_Template.controller;
 
+import com.saiDeveloper.Spring_Boot_Starter_Template.exception.MarkdownException;
 import com.saiDeveloper.Spring_Boot_Starter_Template.model.Markdown;
 import com.saiDeveloper.Spring_Boot_Starter_Template.service.MarkdownService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,16 @@ public class MarkController {
     @GetMapping("/list")
     private ResponseEntity<List<Markdown>> fetchAllMarkdowns(){
         List<Markdown> lst = this.service.fetchAllMarkdowns();
-        return new ResponseEntity<>(lst,HttpStatus.OK);}
+        return new ResponseEntity<>(lst,HttpStatus.OK);
+    }
+
+    @GetMapping("/convert/{id}")
+    private ResponseEntity<String> convertMdToHtml(@PathVariable("id") Long id) throws MarkdownException {
+        String html = service.convertMdToHtml(id);
+        return new ResponseEntity<>(html,HttpStatus.OK);
+
+
+    }
+
 
 }
