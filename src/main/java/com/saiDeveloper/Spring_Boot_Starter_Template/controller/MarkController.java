@@ -2,6 +2,7 @@ package com.saiDeveloper.Spring_Boot_Starter_Template.controller;
 
 import com.saiDeveloper.Spring_Boot_Starter_Template.exception.MarkdownException;
 import com.saiDeveloper.Spring_Boot_Starter_Template.model.Markdown;
+import com.saiDeveloper.Spring_Boot_Starter_Template.response.HtmlResponse;
 import com.saiDeveloper.Spring_Boot_Starter_Template.service.MarkdownService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +44,14 @@ public class MarkController {
     }
 
     @GetMapping("/convert/{id}")
-    private ResponseEntity<String> convertMdToHtml(@PathVariable("id") Long id) throws MarkdownException {
+    private ResponseEntity<HtmlResponse> convertMdToHtml(@PathVariable("id") Long id) throws MarkdownException {
         String html = service.convertMdToHtml(id);
-        return new ResponseEntity<>(html,HttpStatus.OK);
+        HtmlResponse response = new HtmlResponse();
+        response.setMessage("Conversion successfull");
+        response.setHtml(html);
+        return new ResponseEntity<>(response,HttpStatus.OK);
 
-
+ 
     }
 
 
