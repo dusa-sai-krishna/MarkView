@@ -1,0 +1,58 @@
+package com.saiDeveloper.Spring_Boot_Starter_Template.controller;
+
+import com.saiDeveloper.Spring_Boot_Starter_Template.exception.MarkdownException;
+import com.saiDeveloper.Spring_Boot_Starter_Template.model.Markdown;
+import com.saiDeveloper.Spring_Boot_Starter_Template.response.HtmlResponse;
+import com.saiDeveloper.Spring_Boot_Starter_Template.service.MarkdownService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/api")
+public class MarkController {
+
+    @Autowired
+    private MarkdownService service;
+
+    @GetMapping("/")
+    private ResponseEntity<String> helloWorld(){
+        return new ResponseEntity<>("helloWorld", HttpStatus.OK);
+    }
+
+    @PostMapping("/upload")
+    private ResponseEntity<Markdown> handlingFileUpload(@RequestParam("file")MultipartFile file) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String content = new String(file.getBytes());
+        log.info("filename:{}",fileName);
+        log.info("Content:{}",content);
+        return new ResponseEntity<>(this.service.saveMarkdown(fileName,content), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/list")
+    private ResponseEntity<List<Markdown>> fetchAllMarkdowns(){
+        List<Markdown> lst = this.service.fetchAllMarkdowns();
+        return new ResponseEntity<>(lst,HttpStatus.OK);
+    }
+
+    @GetMapping("/convert/{id}")
+    private ResponseEntity<HtmlResponse> convertMdToHtml(@PathVariable("id") Long id) throws MarkdownException {
+        String html = service.convertMdToHtml(id);
+        HtmlResponse response = new HtmlResponse();
+        response.setMessage("Conversion successfull");
+        response.setHtml(html);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+
+ 
+    }
+
+
+}

@@ -1,0 +1,45 @@
+
+<p-toast position="bottom-right" />
+
+<p-dialog header="HTML" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem',height:'30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
+	<div class="flex flex-col space-y-5" >
+		<p-button class="" (click)="copyToClipboard()" icon="pi pi-copy" [rounded]="true" />
+
+		<pre><code class="text-wrap" >{{ htmlContent() }}</code></pre>
+	</div>
+
+
+
+</p-dialog>
+
+<div class="flex flex-col ml-[5rem] mr-[5rem] mt-[1rem] space-y-10">
+
+	<app-header/>
+
+	<h1 class="w-full text-center text-[10rem] font-bold text-primary-600 leading-[10rem]">Markdown to HTML</h1>
+
+
+
+
+		<div class="flex flex-row w-full justify-center space-x-4">
+			<p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" name="file"  accept=".md,.txt" maxFileSize="1000000" [customUpload]="true" (uploadHandler)="uploadHandler($event)" />
+			<p-button [disabled]="isUploaded()"  label="Upload" (onClick)="fu.upload()" severity="secondary" />
+
+		</div>
+
+		<div  class="flex flex-row w-full justify-center space-x-4">
+
+			@if(isUploaded()){
+
+				<p-button [disabled]="htmlContent()!==''" (click)="toHTML()">to HTML</p-button>
+			}
+
+			@if(htmlContent()){
+				<p-button (click)="toggleDialog()" >View HTML</p-button>
+			}
+		</div>
+
+
+
+</div>
